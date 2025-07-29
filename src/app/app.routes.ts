@@ -9,10 +9,10 @@ import { HomePage } from './pages/home/home.page';
 import { ByuLayout } from './layouts/byu/byu.layout';
 
 export const routes: Routes = [
+  { path: 'server-error', component: ServerErrorPage },
   { path: 'forbidden', component: ForbiddenPage },
   { path: 'auth-error', component: AuthErrorPage },
-  {
-    path: '',
+  { path: '',
     component: ByuLayout,
     children: [
       { path: '', component: HomePage }
