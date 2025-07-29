@@ -56,4 +56,21 @@ model User {
   ///////////////////
 
   // Additional fields can be added here:
+
+  tasks Task[]
+}
+
+model Task {
+  id            String    @id @default(uuid())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  //Associations
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  //extra
+  title         String
+  description   String?
+  completed     Boolean   @default(false)
+  dueDate       DateTime?
+  completedDate DateTime?
 }
