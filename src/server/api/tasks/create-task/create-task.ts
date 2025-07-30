@@ -17,6 +17,13 @@ export const createTask = authenticatedProcedure
   .input(createTaskInput)
   .output(createTaskOutput)
   .mutation(async (opts) => {
-    // Your logic goes here
-    throw new TRPCError({ code: 'NOT_IMPLEMENTED' });
+    const task = await prisma.task.create({
+      data: {
+        title: opts.input.title,
+        description: opts.input.description,
+        userId: opts.ctx.userId,
+      }
+    })
+
+    return { id: task.id }
   });
