@@ -17,7 +17,7 @@ export const createTasks = makeDummy({
   const tasks: Prisma.TaskCreateManyInput[] = Array.from({ length: data.count }, () => ({
     title: faker.book.title(),
     description: faker.lorem.sentences({ min: 0, max: 3 }),
-    userId: user.netId,
+    userId: user.id
   }));
 
   const { count } = await prisma.task.createMany({ data: tasks });
