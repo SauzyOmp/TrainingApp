@@ -21,6 +21,7 @@ export type Role = typeof ROLES[number];
  */
 export const PERMISSIONS = [
   'manage-users',
+  'manage-tasks'
 ] as const;
 /**
  * An access permission, granting access to pages and resources.
@@ -31,14 +32,14 @@ export type Permission = typeof PERMISSIONS[number];
  * Maps each user role to an array of permissions granted to that role.
  */
 export const ROLE_PERMISSION_MAP: Record<Role, Permission[]> = {
-  admin: ['manage-users'],
-  user: []
+  admin: ['manage-users', 'manage-tasks'],
+  user: ['manage-tasks']
 }
 
 /**
  * The role given to newly provisioned users.
  */
-export const DEFAULT_ROLE: Role | null = null;
+export const DEFAULT_ROLE: Role | null = 'user';
 
 /**
  * A map specifying to which route the user should 
