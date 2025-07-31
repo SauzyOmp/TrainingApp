@@ -1,8 +1,6 @@
 import { z } from 'zod/v4';
 import { prisma } from '../../../../../prisma/client';
-import { authenticatedProcedure } from '../../trpc';
-import { TRPCError } from '@trpc/server';
-import { id } from 'zod/v4/locales';
+import { authorizedProcedure } from '../../trpc';
 
 const createTaskInput = z.object({
   title: z.string(),
@@ -13,7 +11,8 @@ const createTaskOutput = z.object({
   id: z.string()
 })
 
-export const createTask = authenticatedProcedure
+export const createTask = authorizedProcedure
+  .meta({ requiredPermissions: ['manage-tasks']})
   .input(createTaskInput)
   .output(createTaskOutput)
   .mutation(async (opts) => {

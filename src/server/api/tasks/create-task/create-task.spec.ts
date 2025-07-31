@@ -15,7 +15,7 @@ describe('Create task', () => {
     requestingUser = await prisma.user.create({
       data: generateDummyUserData({
         permissions: [],
-        roles: [],
+        roles: ['user'],
       }),
     });
     createTask = appRouter
