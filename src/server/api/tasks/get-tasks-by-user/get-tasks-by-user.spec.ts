@@ -81,4 +81,11 @@ describe('Get tasks by user', () => {
 
   expect(error).toHaveProperty('code', 'BAD_REQUEST');
 });
+
+it('returns empty if empty database', async () => {
+  const result = await getTasksByUser({ pageSize: 10, pageOffset: 0 });
+
+  expect(result).toHaveProperty('totalCount', 0);
+  expect(result.data).length(0);
+});
 });

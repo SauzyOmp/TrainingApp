@@ -31,7 +31,7 @@ export const getTasksByUser = authorizedProcedure
       where: { userId: opts.ctx.userId }
     });
 
-    if (opts.input.pageOffset >= totalCount) {
+    if (opts.input.pageOffset && opts.input.pageOffset >= totalCount) {
       throw new TRPCError({
         code: 'BAD_REQUEST',
         message: `Cannot paginate to item ${opts.input.pageOffset + 1}, as there are only ${totalCount} items`
