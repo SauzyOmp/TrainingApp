@@ -3,8 +3,6 @@ import { appRouter } from '../../api.routes';
 import { vi, describe, expect, it } from 'vitest';
 import { faker } from '@faker-js/faker';
 import { prisma, User } from '../../../../../prisma/client';
-import { UserCreateDialog } from '../../../../app/components/user-management/user-create/user-create.dialog';
-import { title } from 'process';
 
 describe('Get tasks by user', () => {
   let requestingUser: User;
