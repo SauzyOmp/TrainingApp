@@ -27,8 +27,6 @@ export const deleteTask = authorizedProcedure
         console.error(e)
         throw new TRPCError({ code: 'NOT_FOUND' })
       }
-      else {
-        console.error('An unknown error occured: ' + e)
-      }
+      throw e;
     }
   });
