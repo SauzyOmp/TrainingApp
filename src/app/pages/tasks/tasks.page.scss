@@ -10,3 +10,25 @@
   align-items: center;
   justify-content: center;
 }
+
+.task-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--card-width));
+  gap: var(--card-gap);
+  justify-content: center;
+}
+
+:host {
+  --card-width: 400px;
+  --card-gap: 12px;
+  --page-padding: 2em;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(var(--card-width) * 4 + var(--card-gap) * 3 + var(--page-padding) * 2);
+  margin-inline: auto;
+  padding: 0 var(--page-padding);
+}
+
+mat-paginator {
+  background-color: inherit;
+}
