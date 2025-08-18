@@ -14,6 +14,7 @@ export class ByuLayout {
     menu: [
       { text: 'Home', path: '/' },
       { text: 'My Lists', path: '/lists' },
+      { text: 'My Tasks', path: '/tasks' }
     ],
   };
 }
