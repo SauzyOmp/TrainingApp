@@ -19,7 +19,13 @@
 }
 
 <section class="task-list">
-    @for (task of taskResource.value()?.data; track task.id) {
-    <app-task-card [initialTaskValue]="task" (deleteTaskEvent)="deleteTask($event)"></app-task-card>
+  @if (showCreate() && paginator().pageIndex === 0) {
+  <app-new-task-card (cancelHandler)="showCreate.set(false)" (saveHandler)="taskCreated()"></app-new-task-card>
+  } @for (task of taskResource.value()?.data; track task.id) {
+  <app-task-card [initialTaskValue]="task" (deleteTaskEvent)="deleteTask($event)"></app-task-card>
   }
 </section>
+
+<button [disabled]="showCreate()" (click)="showCreate.set(true)" aria-label="Create task button" mat-fab>
+  <mat-icon>add</mat-icon>
+</button>

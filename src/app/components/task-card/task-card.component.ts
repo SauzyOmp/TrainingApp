@@ -1,4 +1,4 @@
-import { Component, inject, input, linkedSignal, output, Pipe, signal } from '@angular/core';
+import { Component, effect, inject, input, linkedSignal, output, Pipe, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from "@angular/material/icon";
@@ -9,18 +9,22 @@ import { trpcResource } from '@fhss-web-team/frontend-utils';
 import { TRPC_CLIENT } from '../../utils/trpc.client';
 import { DatePipe } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { any } from 'zod/v4';
 
 @Component({
   selector: 'app-task-card',
   imports: [
-    MatIconModule, 
-    MatCardModule, 
-    MatButtonModule, 
-    MatInputModule, 
-    MatFormField, 
-    FormsModule, 
-    DatePipe
-  ],
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormField,
+    FormsModule,
+    DatePipe,
+    MatSelect,
+    MatSelectModule
+],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.scss'
 })
@@ -42,13 +46,25 @@ export class TaskCardComponent {
     status: this.newStatus()
   }), { valueComputation: () =>  this.initialTaskValue() });
 
+  constructor() {
+    effect(() => {
+      const state = this.taskCardState.value()
+      if (state) {
+        this.newTitle.set(state.title)
+        this.newDescription.set(state.description)
+        this.newStatus.set(state.status)
+      }
+    })
+  }
+
   save() {
     this.taskCardState.value.update((prevTask) => {
       if(prevTask === undefined) return undefined
       return {
         ...prevTask,
         title: this.newTitle(),
-        description: this.newDescription()
+        description: this.newDescription(),
+        status: this.newStatus()
       }
     })
     this.taskCardState.refresh();
@@ -58,7 +74,8 @@ export class TaskCardComponent {
   cancel() {
     this.newTitle.set(this.taskCardState.value()?.title ?? '')
     this.newDescription.set(this.taskCardState.value()?.description ?? '')
-    this.editMode();
+    this.editMode.set(false)
+    this.newStatus.set(this.taskCardState.value()?.status ?? 'Incomplete')
   }
 
   deleteTask() {
