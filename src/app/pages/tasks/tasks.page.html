@@ -19,10 +19,7 @@
 }
 
 <section class="task-list">
-  @for (task of taskResource.value()?.data; track task.id) {
-    <div>
-      <h2>{{ task.title }}</h2>
-      <p>{{ task.description }}</p>
-    </div>
+    @for (task of taskResource.value()?.data; track task.id) {
+    <app-task-card [initialTaskValue]="task"></app-task-card>
   }
 </section>

@@ -1,0 +1,30 @@
+<p>task-card works!</p>
+
+<mat-card class="task-card" appearance="raised">
+  @if (editMode()) {
+    <mat-card-content>
+      <!-- edit form goes here -->
+    </mat-card-content>
+    <mat-card-actions class="button-row">
+      <button mat-mini-fab aria-label="save button" (click)="editMode.set(false)">
+        <mat-icon>save</mat-icon>
+      </button>
+    </mat-card-actions>
+  }
+
+  @else {
+    <mat-card-header class="task-header">
+      <mat-card-title><!-- title goes here --></mat-card-title>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <!-- view mode display goes here -->
+    </mat-card-content>
+
+    <mat-card-actions class="button-footer">
+      <button mat-mini-fab aria-label="edit button" (click)="editMode.set(true)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-actions>
+  }
+</mat-card>
