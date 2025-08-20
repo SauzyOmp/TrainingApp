@@ -35,6 +35,9 @@
   @if (taskCardState.value()?.completedDate) {
     <mat-card-subtitle>Completed: {{taskCardState.value()?.completedDate | date}}</mat-card-subtitle>
   }
+  @else {
+    <mat-card-subtitle>Status: {{taskCardState.value()?.status}}</mat-card-subtitle>
+  }
   </mat-card-header>
 
   <mat-card-content>
