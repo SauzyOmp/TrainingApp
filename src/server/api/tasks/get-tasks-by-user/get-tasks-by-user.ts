@@ -18,6 +18,8 @@ const getTasksByUserOutput = z.object({
     completedDate: z.date().nullable(),
     userId: z.string(),
     status: z.literal(Object.values(TaskStatus)),
+    completed: z.boolean(),
+    dueDate: z.date().nullable()
   })),
   totalCount: z.number()
 })

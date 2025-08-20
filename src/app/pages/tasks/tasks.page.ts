@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, viewChild } from '@angular/core';
 import { TRPC_CLIENT } from '../../utils/trpc.client';
 import { trpcResource } from '@fhss-web-team/frontend-utils';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -7,7 +7,11 @@ import { TaskCardComponent } from '../../components/task-card/task-card.componen
 
 @Component({
   selector: 'app-tasks',
-  imports: [MatProgressSpinnerModule, MatPaginator, TaskCardComponent],
+  imports: [
+    MatProgressSpinnerModule, 
+    MatPaginator, 
+    TaskCardComponent
+  ],
   templateUrl: './tasks.page.html',
   styleUrl: './tasks.page.scss'
 })
@@ -29,4 +33,16 @@ export class TasksPage {
   handlePageEvent(e: PageEvent) {
     this.pageOffset.set(e.pageIndex * e.pageSize);
   }
+
+  paginator = viewChild.required(MatPaginator)
+  async deleteTask(id: string){
+  // manually call our delete procedure. No need for a trpcResource in this case
+  await this.trpc.tasks.deleteTask.mutate({id});
+  await this.taskResource.refresh();
+
+  // if we are not on the first page. And if we just deleted the last task on the current page. 
+  if ( this.pageOffset() != 0 && this.taskResource.value()?.data.length === 0 ){
+    this.paginator().previousPage();
+  }
+}
 }
